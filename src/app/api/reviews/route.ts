@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
+import type { OptionalId, WithId } from "mongodb";
 import { getDatabase } from "@/lib/mongodb";
 import type { Review } from "@/types/review";
 
 export const runtime = "nodejs";
 
-type ReviewDocument = Omit<Review, "id" | "createdAt" | "updatedAt"> & { _id: { toString(): string }; createdAt: Date; updatedAt: Date };
+type ReviewDocument = Omit<Review, "id" | "createdAt" | "updatedAt"> & { createdAt: Date; updatedAt: Date };
 const requestWindows = new Map<string, { count: number; resetAt: number }>();
 
 function text(value: unknown, limit: number) { return typeof value === "string" ? value.trim().replace(/\s+/g, " ").slice(0, limit) : ""; }
-function serialize(review: ReviewDocument): Review {
+function serialize(review: WithId<ReviewDocument>): Review {
   const { _id, ...data } = review;
   return { ...data, id: _id.toString(), createdAt: data.createdAt.toISOString(), updatedAt: data.updatedAt.toISOString() };
 }
@@ -40,7 +41,8 @@ export async function POST(request: Request) {
     const collection = (await getDatabase()).collection<ReviewDocument>("reviews");
     await collection.createIndex({ createdAt: -1 });
     const now = new Date();
-    const result = await collection.insertOne({ name, rating, ...(comment ? { comment } : {}), createdAt: now, updatedAt: now });
+    const document: OptionalId<ReviewDocument> = { name, rating, ...(comment ? { comment } : {}), createdAt: now, updatedAt: now };
+    const result = await collection.insertOne(document);
     const review = await collection.findOne({ _id: result.insertedId });
     return NextResponse.json({ review: review ? serialize(review) : null, message: "Thank you for your rating!" }, { status: 201 });
   } catch (error) {
