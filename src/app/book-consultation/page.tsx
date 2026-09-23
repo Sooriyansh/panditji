@@ -1,0 +1,4 @@
+import type { Metadata } from "next";
+import InformationalPage from "@/components/InformationalPage";
+export const metadata: Metadata = { title: "परामर्श बुक करें | उज्जैन", description: "पारंपरिक ज्योतिषीय एवं धार्मिक मार्गदर्शन के लिए परामर्श अनुरोध भेजें।" };
+export default function BookConsultationPage() { return <InformationalPage eyebrow="व्यक्तिगत मार्गदर्शन" title="परामर्श बुक करें" description="अपनी आवश्यकता, प्रश्न और पसंदीदा समय साझा करके पारंपरिक ज्योतिषीय या धार्मिक मार्गदर्शन के लिए अनुरोध भेजें।" points={["कुंडली, पूजा या धार्मिक प्रश्नों के लिए प्रारंभिक चर्चा", "पसंदीदा समय केवल एक प्राथमिकता है", "जन्म विवरण वैकल्पिक हैं और केवल आवश्यक होने पर साझा करें", "उपलब्धता की पुष्टि संपर्क के बाद होगी"]} primaryLabel="अनुरोध भेजें" primaryHref="/online-puja" secondaryLabel="पूजा सेवाएँ देखें" secondaryHref="/puja-services" notice="परामर्श की उपलब्धता, माध्यम और समय पहले से निश्चित नहीं हैं; पुष्टि संपर्क के बाद की जाएगी।" />; }

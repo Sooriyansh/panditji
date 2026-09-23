@@ -1,0 +1,4 @@
+import type { Metadata } from "next";
+import InformationalPage from "@/components/InformationalPage";
+export const metadata: Metadata = { title: "पूजा मुहूर्त | उज्जैन", description: "पूजा की तिथि और मुहूर्त के बारे में पारंपरिक मार्गदर्शन के लिए संपर्क करें।" };
+export default function PujaMuhuratPage() { return <InformationalPage eyebrow="तिथि एवं समय मार्गदर्शन" title="पूजा मुहूर्त" description="अपनी पूजा या अनुष्ठान के लिए पसंदीदा तिथि साझा करें। परंपरा, सेवा और उपलब्धता के अनुसार उचित समय पर चर्चा की जा सकती है।" points={["पसंदीदा तिथि के साथ अनुरोध भेजें", "पूजा के प्रकार और स्थान के अनुसार चर्चा", "उपलब्धता की पुष्टि संपर्क के बाद", "परंपरागत संदर्भ में समय संबंधी मार्गदर्शन"]} primaryLabel="पूजा अनुरोध भेजें" primaryHref="/online-puja" secondaryLabel="परामर्श प्राप्त करें" secondaryHref="/book-consultation" notice="कोई तिथि या समय उपलब्ध होने की गारंटी पहले से नहीं दी जाती; पुष्टि संपर्क और आवश्यक व्यवस्था के बाद की जाती है।" />; }
