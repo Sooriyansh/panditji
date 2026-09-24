@@ -17,5 +17,8 @@ if (!Number.isInteger(port) || port < 1 || port > 65535) {
 }
 
 const nextCli = join(process.cwd(), "node_modules", "next", "dist", "bin", "next");
-const child = spawn(process.execPath, [nextCli, command, "--port", String(port)], { stdio: "inherit", env: process.env });
+const nextArgs = [nextCli, command];
+if (command === "dev") nextArgs.push("--webpack");
+nextArgs.push("--port", String(port));
+const child = spawn(process.execPath, nextArgs, { stdio: "inherit", env: process.env });
 child.on("exit", (code) => process.exit(code ?? 1));

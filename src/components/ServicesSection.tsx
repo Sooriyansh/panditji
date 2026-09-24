@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 
 type ServiceIcon = "yantra" | "planet" | "trishul" | "home" | "kundali";
 
@@ -108,33 +107,11 @@ function Checkmark() {
 }
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
-  const cardRef = useRef<HTMLElement>(null);
-  const [revealed, setRevealed] = useState(false);
-
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card || !window.IntersectionObserver) {
-      setRevealed(true);
-      return;
-    }
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setRevealed(true);
-        observer.unobserve(entry.target);
-      }
-    }, { threshold: 0.12 });
-    observer.observe(card);
-    return () => observer.disconnect();
-  }, []);
-
-  const hiddenTransform = service.reveal === "left" ? "-translate-x-8" : service.reveal === "right" ? "translate-x-8" : "translate-y-8";
   const imageFirstOnDesktop = index % 2 === 1;
 
   return (
     <article
-      ref={cardRef}
-      className={`grid overflow-hidden rounded-[1.75rem] border border-[#dfc99e] bg-[#fffdf9] shadow-[0_18px_45px_rgba(80,42,12,0.10)] transition-[opacity,transform] duration-700 ease-out motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:opacity-100 lg:grid-cols-2 ${revealed ? "translate-x-0 translate-y-0 scale-100 opacity-100" : `${hiddenTransform} scale-[0.985] opacity-0`}`}
-      style={{ transitionDelay: `${Math.min(index * 80, 240)}ms` }}
+      className="grid overflow-hidden rounded-[1.75rem] border border-[#dfc99e] bg-[#fffdf9] shadow-[0_18px_45px_rgba(80,42,12,0.10)] lg:grid-cols-2"
     >
       <div className={`flex flex-col px-6 py-8 sm:px-10 sm:py-10 lg:px-12 lg:py-12 ${imageFirstOnDesktop ? "lg:order-2" : "lg:order-1"}`}>
         <div className="flex items-center gap-3">
