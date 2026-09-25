@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fffaf2;
+  --foreground: #3f210f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Noto Sans Devanagari", "Nirmala UI", "Mangal", Arial, sans-serif;
+}
