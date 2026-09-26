@@ -3,334 +3,197 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const LOADER_DURATION = 2100;
-const EXIT_DURATION = 0.55;
-
-const BG_COLOR = "#5A120E";
-const GOLD = "#C69A42";
-const GOLD_LIGHT = "#D9B866";
-const CREAM = "#F3E4C7";
-const WHITE = "#FFFDF8";
-
+const BRAND = "सुमित शर्मा";
 const DEVANAGARI_FONT =
-  '"Noto Serif Devanagari", "Noto Sans Devanagari", serif';
+  '"Noto Serif Devanagari", "Nirmala UI", "Mangal", serif';
 
-const EASE = [0.22, 1, 0.36, 1];
+const containerVariants = {
+  initial: { opacity: 1 },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
+  },
+};
 
-export default function LoadingScreen() {
+export default function LandingAnimation({ onComplete }) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setVisible(false);
-    }, LOADER_DURATION);
+    let completeTimer;
 
-    return () => window.clearTimeout(timer);
-  }, []);
+    const mainTimer = setTimeout(() => {
+      setVisible(false);
+
+      completeTimer = setTimeout(() => {
+        onComplete?.();
+      }, 800);
+    }, 3200);
+
+    return () => {
+      clearTimeout(mainTimer);
+      if (completeTimer) clearTimeout(completeTimer);
+    };
+  }, [onComplete]);
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ opacity: 1 }}
-          exit={{
-            opacity: 0,
-            scale: 1.015,
-            transition: {
-              duration: EXIT_DURATION,
-              ease: [0.4, 0, 0.2, 1],
-            },
-          }}
-          className="
-            fixed
-            inset-0
-            z-[9999]
-            flex
-            items-center
-            justify-center
-            overflow-hidden
-          "
-          style={{
-            backgroundColor: BG_COLOR,
-          }}
-          role="status"
-          aria-label="Loading website"
+          className="fixed inset-0 z-[99999] flex flex-col items-center justify-between overflow-hidden bg-[#faf6f0] py-10"
+          variants={containerVariants}
+          initial="initial"
+          exit="exit"
         >
-          {/* =====================================================
-              BACKGROUND ATMOSPHERE
-          ====================================================== */}
+          {/* Subtle Ambient Radial Background Glow */}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <div className="h-[500px] w-[500px] rounded-full bg-radial from-[#c69a42]/10 via-[#c69a42]/5 to-transparent blur-3xl sm:h-[650px] sm:w-[650px]" />
+          </div>
 
+          {/* Top Decorative Element */}
           <motion.div
-            initial={{
-              opacity: 0,
-              scale: 0.8,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-            }}
-            transition={{
-              duration: 1.2,
-              ease: EASE,
-            }}
-            aria-hidden="true"
-            className="
-              pointer-events-none
-              absolute
-              left-1/2
-              top-1/2
-              h-[280px]
-              w-[280px]
-              -translate-x-1/2
-              -translate-y-1/2
-              rounded-full
-              blur-[90px]
-              lg:h-[400px]
-              lg:w-[400px]
-              lg:blur-[120px]
-            "
-            style={{
-              backgroundColor: "rgba(198,154,66,0.055)",
-            }}
-          />
-
-          {/* =====================================================
-              CENTER CONTENT
-          ====================================================== */}
-
-          <div className="relative flex flex-col items-center text-center">
-
-            {/* =================================================
-                OM
-            ================================================== */}
-
-            <motion.div
-              initial={{
-                opacity: 0,
-                scale: 0.84,
-                y: 5,
-                filter: "blur(5px)",
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                filter: "blur(0px)",
-              }}
-              transition={{
-                duration: 0.72,
-                ease: EASE,
-              }}
-              className="relative"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="relative z-10 flex items-center gap-2"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-[#b88b43]/60" />
+            <span
+              className="text-[11px] font-medium tracking-widest text-[#a18a7b]"
+              style={{ fontFamily: DEVANAGARI_FONT }}
             >
-              {/* OM glow */}
+              श्री गणेशाय नमः
+            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-[#b88b43]/60" />
+          </motion.div>
 
+          {/* Main Content Container */}
+          <div className="relative z-10 flex w-full max-w-4xl flex-col items-center px-6 text-center">
+            
+            {/* ========================================
+                REDESIGNED OM EMBLEM (Sacred Visual)
+            ========================================= */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="relative flex items-center justify-center"
+            >
+              {/* Outer Slow Rotating Dotted Ring */}
               <motion.div
-                animate={{
-                  opacity: [0.10, 0.22, 0.10],
-                  scale: [1, 1.12, 1],
-                }}
-                transition={{
-                  duration: 2.6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-0
-                  scale-150
-                  rounded-full
-                  bg-[#C69A42]
-                  blur-2xl
-                  lg:blur-3xl
-                "
+                className="absolute h-32 w-32 rounded-full border border-dashed border-[#b88b43]/35 sm:h-40 sm:w-40"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
               />
 
-              {/* OM */}
-
-              <motion.span
-                animate={{
-                  opacity: [0.92, 1, 0.92],
-                }}
-                transition={{
-                  duration: 2.6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="
-                  relative
-                  block
-                  text-[72px]
-                  leading-none
-                  sm:text-[82px]
-                  lg:text-[110px]
-                  xl:text-[120px]
-                "
-                style={{
-                  fontFamily: DEVANAGARI_FONT,
-                  color: GOLD_LIGHT,
-                  textShadow:
-                    "0 5px 24px rgba(198,154,66,0.16)",
-                }}
-              >
-                ॐ
-              </motion.span>
+              {/* Inner Soft Glowing Card Container */}
+              <div className="relative flex h-28 w-28 items-center justify-center rounded-full border border-[#b88b43]/20 bg-[#f4ece1]/60 shadow-[0_8px_30px_rgb(184,139,67,0.08)] backdrop-blur-sm sm:h-36 sm:w-36">
+                <motion.span
+                  className="select-none text-[64px] leading-none text-[#781d16] drop-shadow-sm sm:text-[80px]"
+                  style={{ fontFamily: DEVANAGARI_FONT }}
+                  animate={{ scale: [1, 1.03, 1] }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  ॐ
+                </motion.span>
+              </div>
             </motion.div>
 
-            {/* =================================================
-                BRAND NAME
-            ================================================== */}
+            {/* Accent Divider Line */}
+            <motion.div
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: 60, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+              className="mt-6 h-[1px] bg-gradient-to-r from-transparent via-[#b88b43] to-transparent"
+            />
 
+            {/* ========================================
+                BRAND NAME ("सुमित शर्मा")
+            ========================================= */}
             <motion.h1
-              initial={{
-                opacity: 0,
-                y: 8,
-                filter: "blur(4px)",
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                filter: "blur(0px)",
-              }}
-              transition={{
-                delay: 0.22,
-                duration: 0.58,
-                ease: EASE,
-              }}
-              className="
-                mt-5
-                text-center
-                text-[22px]
-                font-medium
-                leading-tight
-                sm:text-[26px]
-                lg:mt-7
-                lg:text-[34px]
-                xl:text-[38px]
-              "
+              aria-label={BRAND}
+              className="mt-5 w-full text-[40px] font-bold leading-tight text-[#241814] sm:text-[60px] md:text-[80px] lg:text-[96px]"
               style={{
                 fontFamily: DEVANAGARI_FONT,
-                color: WHITE,
+                fontFeatureSettings: '"kern", "liga"',
+                textRendering: "optimizeLegibility",
+              }}
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.9,
+                delay: 0.6,
+                ease: [0.22, 1, 0.36, 1],
               }}
             >
-              पंडित सुमित शर्मा
+              {BRAND}
             </motion.h1>
 
-            {/* =================================================
-                TAGLINE
-            ================================================== */}
-
-            <motion.p
-              initial={{
-                opacity: 0,
-                y: 6,
-              }}
-              animate={{
-                opacity: 0.72,
-                y: 0,
-              }}
-              transition={{
-                delay: 0.38,
-                duration: 0.5,
-                ease: EASE,
-              }}
-              className="
-                mt-2
-                text-[13px]
-                sm:text-sm
-                lg:mt-3
-                lg:text-[17px]
-                xl:text-[18px]
-              "
-              style={{
-                fontFamily: DEVANAGARI_FONT,
-                color: CREAM,
-              }}
+            {/* Tagline */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 1.0 }}
+              className="mt-3 flex items-center justify-center gap-3 sm:mt-4"
             >
-              वैदिक परंपरा • आध्यात्मिक मार्गदर्शन
+              <span className="h-px w-8 bg-gradient-to-r from-transparent to-[#9c7b65]/50 sm:w-12" />
+              <span
+                className="text-[13px] font-semibold tracking-wider text-[#735848] sm:text-[15px]"
+                style={{ fontFamily: DEVANAGARI_FONT }}
+              >
+                वैदिक ज्योतिष
+              </span>
+              <span className="h-px w-8 bg-gradient-to-l from-transparent to-[#9c7b65]/50 sm:w-12" />
+            </motion.div>
+
+            {/* Services List */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 1.3 }}
+              className="mt-2 text-[10px] font-medium text-[#9c8374] sm:text-[12px]"
+              style={{ fontFamily: DEVANAGARI_FONT }}
+            >
+              पूजा • अनुष्ठान • दोष निवारण
             </motion.p>
 
-            {/* =================================================
-                PROGRESS
-            ================================================== */}
-
+            {/* Progress Bar */}
             <motion.div
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              transition={{
-                delay: 0.55,
-                duration: 0.4,
-              }}
-              className="
-                mt-8
-                h-[2px]
-                w-36
-                overflow-hidden
-                rounded-full
-                lg:mt-10
-                lg:w-[180px]
-              "
-              style={{
-                backgroundColor: "rgba(255,255,255,0.10)",
-              }}
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.5, delay: 1.45 }}
+              className="mt-8 h-[2px] w-[110px] origin-center overflow-hidden rounded-full bg-[#781d16]/10 sm:w-[140px]"
             >
               <motion.div
-                initial={{
-                  width: "0%",
-                }}
-                animate={{
-                  width: "100%",
-                }}
+                className="h-full w-full origin-left bg-gradient-to-r from-[#781d16] via-[#b88b43] to-[#781d16]"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
                 transition={{
-                  delay: 0.35,
-                  duration: 1.45,
-                  ease: [0.65, 0, 0.35, 1],
-                }}
-                className="h-full"
-                style={{
-                  backgroundColor: GOLD,
+                  duration: 1.1,
+                  delay: 1.5,
+                  ease: [0.76, 0, 0.24, 1],
                 }}
               />
             </motion.div>
           </div>
 
-          {/* =====================================================
-              SUBTLE FOOTER
-          ====================================================== */}
-
-          <motion.p
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 0.28,
-            }}
-            transition={{
-              delay: 0.9,
-              duration: 0.5,
-            }}
-            className="
-              absolute
-              bottom-6
-              left-0
-              right-0
-              text-center
-              text-[8px]
-              tracking-[0.22em]
-              sm:text-[9px]
-            "
-            style={{
-              fontFamily: DEVANAGARI_FONT,
-              color: CREAM,
-            }}
+          {/* Footer Location */}
+          <motion.div
+            className="relative z-10 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.8, duration: 0.6 }}
           >
-            श्रद्धा • संकल्प • साधना
-          </motion.p>
+            <p
+              className="text-[10px] font-semibold tracking-widest text-[#a18a7b] sm:text-[11px]"
+              style={{ fontFamily: DEVANAGARI_FONT }}
+            >
+              उज्जैन • मध्य प्रदेश
+            </p>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

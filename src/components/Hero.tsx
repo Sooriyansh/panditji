@@ -21,21 +21,19 @@ function CalendarSymbol() {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth="1.6"
       aria-hidden="true"
-      className="h-7 w-7 sm:h-8 sm:w-8"
+      className="h-5 w-5 sm:h-6 sm:w-6"
     >
       <rect x="3.5" y="5" width="17" height="15" rx="2.5" />
-
       <path
-        d="M7.5 3v4m9-4v4M3.5 9.5h17"
+        d="M7.5 3v4M16.5 3v4M3.5 9.5h17"
         strokeLinecap="round"
       />
-
       <path
-        d="M7.5 13h.01m4.5 0h.01m4.5 0h.01M7.5 16.5h.01m4.5 0h.01m4.5 0h.01"
+        d="M7.5 13h.01M12 13h.01M16.5 13h.01M7.5 16.5h.01M12 16.5h.01M16.5 16.5h.01"
         strokeLinecap="round"
-        strokeWidth="1.8"
+        strokeWidth="2"
       />
     </svg>
   );
@@ -52,7 +50,7 @@ function ArrowIcon() {
       <path
         d="M4 10h11M11 5l5 5-5 5"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -73,7 +71,6 @@ function LocationIcon() {
         stroke="currentColor"
         strokeWidth="1.5"
       />
-
       <circle
         cx="12"
         cy="9"
@@ -145,24 +142,27 @@ const slides: HeroSlide[] = [
 
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
+
   const slide = slides[activeIndex];
 
   useEffect(() => {
-    const rotation = window.setInterval(() => {
-      setActiveIndex((index) => (index + 1) % slides.length);
-    }, 4000);
+    const interval = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % slides.length);
+    }, 5000);
 
-    return () => window.clearInterval(rotation);
+    return () => window.clearInterval(interval);
   }, []);
 
   return (
     <section
       aria-label="पंडित सुमित शर्मा जी की वैदिक सेवाएँ"
       className="
-        relative isolate flex
-        min-h-[calc(100svh-88px)]
-        items-center overflow-hidden
+        relative isolate overflow-hidden
         bg-[#170d0b]
+        text-[#FFF9EF]
+
+        min-h-[100svh]
+
         lg:-mt-24
         lg:min-h-screen
       "
@@ -174,58 +174,93 @@ export default function Hero() {
       <video
         aria-hidden="true"
         autoPlay
+        loop
+        muted
+        playsInline
+        poster="/ujjain-hero-ai.png"
         className="
           absolute inset-0 -z-30
           h-full w-full
           object-cover
           object-center
         "
-        loop
-        muted
-        playsInline
-        poster="/ujjain-hero-ai.png"
       >
         <source src="/ujjain-hero-ai.mp4" type="video/mp4" />
       </video>
 
-      {/* Base darkness */}
-      <div className="absolute inset-0 -z-20 bg-[#120b0a]/35" />
-
-      {/* Left content protection */}
+      {/* Overall dark overlay */}
       <div
+        aria-hidden="true"
         className="
           absolute inset-0 -z-20
-          bg-[linear-gradient(90deg,rgba(10,6,5,0.97)_0%,rgba(18,9,7,0.91)_25%,rgba(25,12,9,0.67)_48%,rgba(20,10,8,0.28)_72%,rgba(10,6,5,0.40)_100%)]
+          bg-[#120806]/55
         "
       />
 
-      {/* Bottom fade */}
+      {/* Desktop left readability */}
       <div
+        aria-hidden="true"
         className="
-          absolute inset-x-0 bottom-0 -z-20
-          h-64
-          bg-[linear-gradient(180deg,transparent,rgba(10,6,5,0.82))]
+          absolute inset-0 -z-20
+
+          bg-[linear-gradient(
+            90deg,
+            rgba(10,5,4,0.98)_0%,
+            rgba(15,7,5,0.94)_25%,
+            rgba(22,10,7,0.72)_48%,
+            rgba(18,8,6,0.28)_72%,
+            rgba(10,5,4,0.38)_100%
+          )]
+
+          max-lg:bg-[linear-gradient(
+            180deg,
+            rgba(10,5,4,0.70)_0%,
+            rgba(12,6,5,0.74)_45%,
+            rgba(10,5,4,0.94)_100%
+          )]
+        "
+      />
+
+      {/* Bottom cinematic fade */}
+      <div
+        aria-hidden="true"
+        className="
+          absolute inset-x-0 bottom-0 -z-10
+          h-72
+          bg-gradient-to-t
+          from-[#0d0705]/95
+          via-[#0d0705]/35
+          to-transparent
         "
       />
 
       {/* Top fade */}
       <div
+        aria-hidden="true"
         className="
-          absolute inset-x-0 top-0 -z-20
+          absolute inset-x-0 top-0 -z-10
           h-40
-          bg-[linear-gradient(180deg,rgba(7,4,3,0.62),transparent)]
+          bg-gradient-to-b
+          from-[#080403]/60
+          to-transparent
         "
       />
 
-      {/* Warm atmosphere */}
+      {/* Warm ambient glow */}
       <div
         aria-hidden="true"
         className="
-          absolute left-[5%] top-[15%] -z-10
-          h-80 w-80
+          absolute
+          left-[-8rem]
+          top-[18%]
+          -z-10
+          h-80
+          w-80
           rounded-full
           bg-[#C69A42]/10
           blur-[120px]
+
+          sm:left-[3%]
         "
       />
 
@@ -235,18 +270,47 @@ export default function Hero() {
 
       <div
         className="
-          mx-auto w-full max-w-7xl
-          px-5 py-24
-          sm:px-8 sm:py-28
-          lg:px-12 lg:py-32
+          mx-auto
+          flex
+          min-h-[100svh]
+          w-full
+          max-w-7xl
+          items-center
+
+          px-5
+          pb-36
+          pt-28
+
+          sm:px-8
+          sm:pb-40
+          sm:pt-32
+
+          lg:px-12
+          lg:pb-32
+          lg:pt-36
         "
       >
-        <div className="max-w-3xl">
+        <div
+          className="
+            w-full
+            max-w-3xl
+
+            lg:max-w-[760px]
+          "
+        >
+          {/* =====================================================
+              SLIDER CONTENT
+          ====================================================== */}
+
           <div
             aria-live="polite"
             className="
-              min-h-[430px]
-              sm:min-h-[390px]
+              min-h-[500px]
+
+              min-[400px]:min-h-[465px]
+
+              sm:min-h-[430px]
+
               lg:min-h-[410px]
             "
           >
@@ -255,7 +319,7 @@ export default function Hero() {
                 key={slide.heading}
                 initial={{
                   opacity: 0,
-                  y: 18,
+                  y: 20,
                 }}
                 animate={{
                   opacity: 1,
@@ -263,69 +327,128 @@ export default function Hero() {
                 }}
                 exit={{
                   opacity: 0,
-                  y: -14,
+                  y: -16,
                 }}
                 transition={{
-                  duration: 0.65,
+                  duration: 0.6,
                   ease: [0.22, 1, 0.36, 1],
                 }}
               >
-                {/* Badge */}
-                <div className="mb-7">
+                {/* =================================================
+                    BADGE
+                ================================================== */}
+
+                <div className="mb-6 sm:mb-7">
                   <div
                     className="
-                      inline-flex items-center gap-3
+                      inline-flex
+                      max-w-full
+                      items-center
+                      gap-2.5
                       rounded-full
-                      border border-[#E8C98C]/25
+                      border
+                      border-[#E8C98C]/25
                       bg-[#fff5df]/[0.08]
-                      px-4 py-2.5
-                      shadow-[0_8px_30px_rgba(0,0,0,0.15)]
-                      backdrop-blur-md
+                      px-3.5
+                      py-2
+
+                      shadow-[0_8px_30px_rgba(0,0,0,0.18)]
+                      backdrop-blur-xl
+
+                      sm:gap-3
+                      sm:px-4
+                      sm:py-2.5
                     "
                   >
-                    <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D8AD5E]/50" />
+                    <span className="relative flex h-2 w-2 shrink-0">
+                      <span
+                        className="
+                          absolute
+                          inline-flex
+                          h-full
+                          w-full
+                          animate-ping
+                          rounded-full
+                          bg-[#D8AD5E]/50
+                        "
+                      />
 
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-[#D8AD5E]" />
+                      <span
+                        className="
+                          relative
+                          inline-flex
+                          h-2
+                          w-2
+                          rounded-full
+                          bg-[#D8AD5E]
+                        "
+                      />
                     </span>
 
-                    <span className="text-xs font-bold tracking-wide text-[#F8E9CA] sm:text-sm">
+                    <span
+                      className="
+                        truncate
+                        text-[11px]
+                        font-bold
+                        tracking-wide
+                        text-[#F8E9CA]
+
+                        sm:text-sm
+                      "
+                    >
                       {slide.badge}
                     </span>
                   </div>
                 </div>
 
-                {/* Heading */}
+                {/* =================================================
+                    HEADING
+                ================================================== */}
+
                 <h1
                   className="
-                    max-w-3xl
-                    text-[2.6rem]
+                    max-w-[700px]
+
+                    text-[2.45rem]
                     font-extrabold
-                    leading-[1.14]
-                    tracking-[-0.035em]
+                    leading-[1.12]
+                    tracking-[-0.04em]
+
                     text-[#FFF9EF]
+
+                    min-[400px]:text-[2.65rem]
+
                     sm:text-5xl
-                    lg:text-[4.35rem]
-                    lg:leading-[1.08]
+                    sm:leading-[1.1]
+
+                    lg:text-[4.25rem]
+                    lg:leading-[1.06]
                   "
                 >
                   {slide.heading}
                 </h1>
 
-                {/* Gold signature line */}
-                <div className="mt-7 flex items-center gap-3">
-                  <span className="h-px w-16 bg-[#C69A42]" />
+                {/* Gold signature */}
+                <div className="mt-6 flex items-center gap-2.5 sm:mt-7 sm:gap-3">
+                  <span className="h-px w-12 bg-[#C69A42] sm:w-16" />
                   <span className="h-1.5 w-1.5 rounded-full bg-[#C69A42]" />
-                  <span className="h-px w-7 bg-[#C69A42]/45" />
+                  <span className="h-px w-6 bg-[#C69A42]/45 sm:w-7" />
                 </div>
 
-                {/* Description */}
+                {/* =================================================
+                    DESCRIPTION
+                ================================================== */}
+
                 <p
                   className="
-                    mt-6 max-w-2xl
-                    text-[15px]
-                    leading-7
+                    mt-5
+                    max-w-2xl
+
+                    text-[14px]
+                    leading-6
                     text-[#F7EBDD]/80
+
+                    sm:mt-6
                     sm:text-lg
                     sm:leading-8
                   "
@@ -333,35 +456,59 @@ export default function Hero() {
                   {slide.description}
                 </p>
 
-                {/* CTA */}
-                <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+                {/* =================================================
+                    CTA
+                ================================================== */}
+
+                <div
+                  className="
+                    mt-7
+                    grid
+                    grid-cols-1
+                    gap-3
+
+                    min-[430px]:grid-cols-2
+
+                    sm:mt-9
+                    sm:flex
+                  "
+                >
                   <Link
                     href={slide.primaryHref}
                     className="
-                      group inline-flex
-                      min-h-13
-                      items-center justify-center gap-3
+                      group
+                      inline-flex
+                      min-h-12
+                      items-center
+                      justify-center
+                      gap-3
                       rounded-xl
                       bg-[#A94317]
-                      px-7
-                      text-sm font-extrabold
+                      px-5
+                      text-sm
+                      font-extrabold
                       text-white
+
                       shadow-[0_12px_35px_rgba(82,26,8,0.35)]
-                      transition-all duration-300
+
+                      transition-all
+                      duration-300
+
                       hover:-translate-y-1
                       hover:bg-[#BD4E1B]
-                      hover:shadow-[0_18px_42px_rgba(82,26,8,0.42)]
+
                       focus:outline-none
                       focus:ring-2
                       focus:ring-[#E8C98C]
                       focus:ring-offset-2
                       focus:ring-offset-[#21110D]
+
                       sm:min-h-14
+                      sm:px-7
                       sm:text-base
                     "
                   >
                     <span>{slide.primaryLabel}</span>
-
                     <ArrowIcon />
                   </Link>
 
@@ -369,25 +516,35 @@ export default function Hero() {
                     href={slide.secondaryHref}
                     className="
                       inline-flex
-                      min-h-13
-                      items-center justify-center
+                      min-h-12
+                      items-center
+                      justify-center
                       rounded-xl
-                      border border-[#F7EBDD]/25
+                      border
+                      border-[#F7EBDD]/25
                       bg-[#fff8ec]/[0.07]
-                      px-7
-                      text-sm font-bold
+                      px-5
+                      text-sm
+                      font-bold
                       text-[#FFF8EC]
-                      backdrop-blur-md
-                      transition-all duration-300
+
+                      backdrop-blur-xl
+
+                      transition-all
+                      duration-300
+
                       hover:-translate-y-1
                       hover:border-[#F7EBDD]/40
                       hover:bg-[#fff8ec]/[0.13]
+
                       focus:outline-none
                       focus:ring-2
                       focus:ring-[#E8C98C]
                       focus:ring-offset-2
                       focus:ring-offset-[#21110D]
+
                       sm:min-h-14
+                      sm:px-7
                       sm:text-base
                     "
                   >
@@ -395,14 +552,21 @@ export default function Hero() {
                   </Link>
                 </div>
 
-                {/* Location */}
-                <div className="mt-8 flex items-center gap-3">
+                {/* =================================================
+                    LOCATION
+                ================================================== */}
+
+                <div className="mt-6 flex items-center gap-2.5 sm:mt-8 sm:gap-3">
                   <span
                     className="
-                      grid h-7 w-7
+                      grid
+                      h-7
+                      w-7
+                      shrink-0
                       place-items-center
                       rounded-full
-                      border border-[#D8AD5E]/30
+                      border
+                      border-[#D8AD5E]/30
                       bg-[#D8AD5E]/10
                       text-[#E5C37E]
                     "
@@ -412,10 +576,11 @@ export default function Hero() {
 
                   <span
                     className="
-                      text-xs
+                      text-[11px]
                       font-semibold
                       tracking-wide
                       text-[#F7EBDD]/70
+
                       sm:text-sm
                     "
                   >
@@ -431,7 +596,13 @@ export default function Hero() {
           ====================================================== */}
 
           <div
-            className="mt-2 flex items-center gap-3"
+            className="
+              mt-1
+              flex
+              items-center
+              gap-2.5
+              sm:gap-3
+            "
             aria-label="हीरो संदेश चुनें"
           >
             {slides.map((item, index) => (
@@ -444,18 +615,20 @@ export default function Hero() {
                   index === activeIndex ? "true" : undefined
                 }
                 className={`
-                  relative h-1.5
+                  relative
+                  h-1.5
                   overflow-hidden
                   rounded-full
-                  transition-all duration-500
+                  transition-all
+                  duration-500
+
                   focus:outline-none
                   focus:ring-2
                   focus:ring-[#E8C98C]
-                  focus:ring-offset-2
-                  focus:ring-offset-[#21110D]
+
                   ${
                     index === activeIndex
-                      ? "w-12 bg-[#D8AD5E]"
+                      ? "w-10 bg-[#D8AD5E] sm:w-12"
                       : "w-2.5 bg-[#FFF8EC]/30 hover:bg-[#FFF8EC]/60"
                   }
                 `}
@@ -464,7 +637,9 @@ export default function Hero() {
                   <motion.span
                     layoutId="hero-progress"
                     className="
-                      absolute inset-y-0 left-0
+                      absolute
+                      inset-y-0
+                      left-0
                       w-1/2
                       rounded-full
                       bg-[#F2D79F]
@@ -476,11 +651,14 @@ export default function Hero() {
 
             <span
               className="
-                ml-2
-                text-[10px]
+                ml-1
+                text-[9px]
                 font-bold
-                tracking-[0.18em]
+                tracking-[0.16em]
                 text-[#F7EBDD]/45
+
+                sm:ml-2
+                sm:text-[10px]
               "
             >
               {String(activeIndex + 1).padStart(2, "0")} /{" "}
@@ -491,7 +669,7 @@ export default function Hero() {
       </div>
 
       {/* =========================================================
-          PREMIUM PANCHANG WIDGET
+          PANCHANG CARD
       ========================================================== */}
 
       <Link
@@ -500,157 +678,283 @@ export default function Hero() {
         className="
           group
           absolute
-          bottom-5 right-5
-          z-10
-          w-[190px]
-          overflow-hidden
-          rounded-[1.35rem]
-          border border-[#E8C98C]/30
-          bg-[#4D1C0E]/88
-          p-3
+          z-30
+
+          /* ================= MOBILE ================= */
+
+          bottom-4
+          left-4
+          right-4
+          w-auto
+
+          rounded-2xl
+          border
+          border-[#E8C98C]/25
+          bg-[#42170D]/95
+          p-3.5
+
           text-[#FFF8EC]
-          shadow-[0_20px_55px_rgba(18,6,2,0.45)]
-          backdrop-blur-xl
-          transition-all duration-500
-          hover:-translate-y-1
-          hover:border-[#E8C98C]/55
-          hover:bg-[#5D2110]/95
-          hover:shadow-[0_25px_65px_rgba(18,6,2,0.55)]
+
+          shadow-[0_18px_50px_rgba(18,6,2,0.5)]
+          backdrop-blur-2xl
+
+          transition-all
+          duration-300
+
+          active:scale-[0.98]
+
+          hover:border-[#E8C98C]/50
+
           focus:outline-none
           focus:ring-2
           focus:ring-[#E8C98C]
           focus:ring-offset-2
           focus:ring-offset-[#21110D]
-          sm:right-8
-          sm:w-[210px]
+
+          /* ================= SMALL MOBILE ================= */
+
+          max-[380px]:bottom-3
+          max-[380px]:left-3
+          max-[380px]:right-3
+          max-[380px]:rounded-xl
+          max-[380px]:p-3
+
+          /* ================= TABLET ================= */
+
+          sm:left-auto
+          sm:right-6
+          sm:bottom-6
+          sm:w-[250px]
+          sm:rounded-[1.35rem]
           sm:p-4
+
+          /* ================= DESKTOP ================= */
+
           lg:bottom-auto
+          lg:left-auto
           lg:right-[max(2rem,calc((100vw-80rem)/2))]
           lg:top-1/2
-          lg:w-[218px]
+          lg:w-[225px]
           lg:-translate-y-1/2
-          lg:rounded-[1.6rem]
+          lg:rounded-[1.5rem]
           lg:p-4
         "
       >
-        {/* Background detail */}
+        {/* Glow */}
         <span
           aria-hidden="true"
           className="
             pointer-events-none
             absolute
-            -right-12
-            -top-12
-            h-28
-            w-28
+            -right-8
+            -top-8
+            h-24
+            w-24
             rounded-full
             bg-[#D8AD5E]/10
             blur-3xl
-            transition-all duration-500
+
+            transition-all
+            duration-500
+
             group-hover:bg-[#D8AD5E]/20
           "
         />
 
-        {/* Top row */}
-        <div className="relative flex items-center justify-between">
+        {/* =====================================================
+            MOBILE / TABLET HORIZONTAL HEADER
+        ====================================================== */}
+
+        <div
+          className="
+            relative
+            flex
+            items-center
+            gap-3
+          "
+        >
           <span
             className="
-              grid h-11 w-11
+              grid
+              h-10
+              w-10
+              shrink-0
               place-items-center
               rounded-xl
-              border border-[#F2D79F]/20
+              border
+              border-[#F2D79F]/20
               bg-[#FFF5DF]/10
               text-[#F5D89B]
-              transition-all duration-300
-              group-hover:border-[#F2D79F]/40
-              group-hover:bg-[#FFF5DF]/15
-              sm:h-12 sm:w-12
+
+              sm:h-11
+              sm:w-11
             "
           >
             <CalendarSymbol />
           </span>
 
-          <span
-            className="
-              rounded-full
-              border border-[#F2D79F]/15
-              bg-[#FFF5DF]/[0.06]
-              px-2.5 py-1
-              text-[9px]
-              font-bold
-              uppercase
-              tracking-[0.16em]
-              text-[#EACB91]/80
-            "
-          >
-            पंचांग
-          </span>
-        </div>
-
-        {/* Divider */}
-        <div className="relative my-3.5 h-px bg-[#F2D79F]/15" />
-
-        {/* Main content */}
-        <div className="relative">
-          <p className="text-[10px] font-semibold tracking-[0.16em] text-[#EACB91]/65">
-            दैनिक वैदिक गणना
-          </p>
-
-          <div className="mt-1 flex items-end justify-between gap-3">
-            <div>
-              <p className="text-lg font-extrabold leading-none text-[#FFF8EC] sm:text-xl">
-                आज का
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center justify-between gap-2">
+              <p
+                className="
+                  text-[9px]
+                  font-semibold
+                  uppercase
+                  tracking-[0.15em]
+                  text-[#EACB91]/65
+                "
+              >
+                दैनिक वैदिक गणना
               </p>
 
-              <p className="mt-1 text-lg font-extrabold leading-none text-[#EACB91] sm:text-xl">
+              <span
+                className="
+                  shrink-0
+                  rounded-full
+                  border
+                  border-[#F2D79F]/15
+                  bg-[#FFF5DF]/[0.06]
+                  px-2
+                  py-1
+                  text-[8px]
+                  font-bold
+                  tracking-[0.1em]
+                  text-[#EACB91]/80
+                "
+              >
                 पंचांग
-              </p>
+              </span>
             </div>
 
-            <span
-              aria-hidden="true"
-              className="
-                text-2xl
-                font-light
-                text-[#D8AD5E]/50
-                transition-transform duration-500
-                group-hover:rotate-12
-              "
-            >
-              ✦
-            </span>
+            <div className="mt-1 flex items-center justify-between">
+              <div className="flex items-baseline gap-1.5">
+                <span
+                  className="
+                    text-base
+                    font-extrabold
+                    leading-none
+                    text-[#FFF8EC]
+
+                    sm:text-lg
+                  "
+                >
+                  आज का
+                </span>
+
+                <span
+                  className="
+                    text-base
+                    font-extrabold
+                    leading-none
+                    text-[#EACB91]
+
+                    sm:text-lg
+                  "
+                >
+                  पंचांग
+                </span>
+              </div>
+
+              <span
+                aria-hidden="true"
+                className="
+                  ml-2
+                  text-lg
+                  text-[#D8AD5E]/60
+                  transition-transform
+                  duration-300
+                  group-hover:rotate-12
+                "
+              >
+                ✦
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Bottom information */}
-        <div className="relative mt-4 flex items-center justify-between">
-          <span className="text-[10px] font-medium text-[#FFF8EC]/50">
-            उज्जैन
-          </span>
+        {/* =====================================================
+            DIVIDER
+        ====================================================== */}
+
+        <div
+          aria-hidden="true"
+          className="
+            relative
+            my-3
+            h-px
+            bg-[#F2D79F]/15
+          "
+        />
+
+        {/* =====================================================
+            FOOTER
+        ====================================================== */}
+
+        <div
+          className="
+            relative
+            flex
+            items-center
+            justify-between
+            gap-3
+          "
+        >
+          <div className="flex items-center gap-2">
+            <span
+              className="
+                h-1.5
+                w-1.5
+                rounded-full
+                bg-[#D8AD5E]
+              "
+            />
+
+            <span
+              className="
+                text-[9px]
+                font-medium
+                text-[#FFF8EC]/55
+
+                sm:text-[10px]
+              "
+            >
+              उज्जैन
+            </span>
+          </div>
 
           <span
             className="
               inline-flex
               items-center
               gap-1.5
-              text-[10px]
+              text-[9px]
               font-bold
               text-[#F2D79F]
-              transition-all duration-300
+
+              transition-all
+              duration-300
+
               group-hover:gap-2
+
+              sm:text-[10px]
             "
           >
-            देखें
+            पूरा कैलेंडर
             <ArrowIcon />
           </span>
         </div>
       </Link>
 
-      {/* Bottom subtle border */}
+      {/* =========================================================
+          BOTTOM BORDER
+      ========================================================== */}
+
       <div
         aria-hidden="true"
         className="
-          absolute inset-x-0 bottom-0
+          absolute
+          inset-x-0
+          bottom-0
           h-px
           bg-[#D8AD5E]/25
         "
@@ -658,3 +962,4 @@ export default function Hero() {
     </section>
   );
 }
+
